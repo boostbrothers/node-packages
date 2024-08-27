@@ -1,14 +1,12 @@
 {
-  "name": "packages",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "bbros-bot",
   "devDependencies": {
     "turbo": "^2.0.14"
   }

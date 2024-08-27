@@ -1,0 +1,34 @@
+{
+  "name": "@bbros/ifify",
+  "version": "1.1.0",
+  "description": "functional condition functions",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "author": "yoonhoGo <yoonho.go@bbros.kr>",
+  "license": "MIT",
+  "keywords": [
+    "functional",
+    "condition",
+    "if",
+    "else",
+    "switch",
+    "case",
+    "default"
+  ],
+  "scripts": {
+    "lint": "gts lint",
+    "clean": "gts clean",
+    "compile": "tsc",
+    "fix": "gts fix"
+  },
+  "devDependencies": {
+    "@types/node": "^14.18.5",
+    "gts": "^3.1.0",
+    "typescript": "^4.5.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/boostbrothers/node-packages.git",
+    "directory": "packages/ifify"
+  }
+}
