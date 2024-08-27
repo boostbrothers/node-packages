@@ -1,0 +1,34 @@
+{
+  "name": "@boostbrothers/please",
+  "version": "0.0.2-alpha.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "compile": "tsc",
+    "lint": "eslint ./src/**/*.ts",
+    "lint:fix": "eslint ./src/**/*.ts --fix",
+    "prepublish": "npm run compile",
+    "publish:alpha": "npm version prerelease --preid=alpha && npm publish --tag alpha",
+    "publish:beta": "npm version prerelease --preid=beta && npm publish --tag beta",
+    "publish:patch": "npm version patch && npm publish",
+    "publish:minor": "npm version minor && npm publish",
+    "publish:major": "npm version major && npm publish"
+  },
+  "keywords": [],
+  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/boostbrothers/ddocdoc-library.git",
+    "directory": "packages/please"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@boostbrothers/result": "^1.8.0-test.1",
+    "axios": "^1.7.2",
+    "openapi-typescript-helpers": "^0.0.9"
+  }
+}
