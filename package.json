@@ -4,10 +4,10 @@
     "packages/*"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "compile": "nx run-many --target=compile --all"
   },
   "author": "bbros-bot",
   "devDependencies": {
-    "turbo": "^2.0.14"
+    "nx": "19.6.5"
   }
 }
