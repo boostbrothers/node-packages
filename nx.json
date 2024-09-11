@@ -30,5 +30,8 @@
         "buildTargetName": "build"
       }
     }
-  ]
+  ],
+  "release": {
+    "projects": ["packages/*"]
+  }
 }

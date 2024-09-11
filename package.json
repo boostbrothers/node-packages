@@ -4,7 +4,11 @@
     "packages/*"
   ],
   "scripts": {
-    "compile": "nx run-many --target=compile --all"
+    "compile": "nx run-many --target=compile --all",
+    "build": "nx @nx/js:tsc",
+    "lint": "nx lint",
+    "lint:fix": "nx lint:fix",
+    "graph": "nx graph"
   },
   "author": "bbros-bot",
   "devDependencies": {
