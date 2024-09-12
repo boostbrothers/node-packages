@@ -2,24 +2,23 @@
   "name": "@bbros/ifify",
   "version": "1.1.0",
   "description": "functional condition functions",
-  "main": "index.js",
-  "types": "index.d.ts",
   "author": "yoonhoGo <yoonho.go@bbros.kr>",
   "license": "MIT",
-  "keywords": [
-    "functional",
-    "condition",
-    "if",
-    "else",
-    "switch",
-    "case",
-    "default"
-  ],
   "scripts": {
-    "lint": "gts lint",
-    "clean": "gts clean",
+    "clean": "rm -rf dist node_modules",
     "compile": "tsc",
-    "fix": "gts fix"
+    "lint": "eslint ./src/**/*.ts",
+    "lint:fix": "eslint ./src/**/*.ts --fix"
+  },
+  "main": "./index.cjs.js",
+  "module": "./index.esm.js",
+  "types": "./index.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": "./index.esm.js",
+      "require": "./index.cjs.js"
+    }
   },
   "devDependencies": {
     "@types/node": "^14.18.5",
@@ -30,5 +29,14 @@
     "type": "git",
     "url": "git+https://github.com/boostbrothers/node-packages.git",
     "directory": "packages/ifify"
-  }
+  },
+  "keywords": [
+    "functional",
+    "condition",
+    "if",
+    "else",
+    "switch",
+    "case",
+    "default"
+  ]
 }

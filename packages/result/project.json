@@ -1,0 +1,6 @@
+{
+  "name": "result",
+  "targets": {
+    "build": {}
+  }
+}

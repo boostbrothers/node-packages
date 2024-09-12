@@ -2,18 +2,36 @@
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "targetDefaults": {
     "lint": {
-      "dependsOn": ["^lint"],
-      "cache": true
+      "cache": true,
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile"],
+      "options": {
+        "lintFilePatterns": ["{projectRoot}/**/*.ts"]
+      }
     },
     "compile": {
-      "dependsOn": ["^compile"],
-      "outputs": ["{projectRoot}/dist"],
-      "cache": true
-    },
-    "@nx/js:tsc": {
       "cache": true,
-      "dependsOn": ["^build"],
-      "inputs": ["default", "^default"]
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "compiler": "tsc",
+        "main": "{projectRoot}/src/index.ts",
+        "outputPath": "{projectRoot}/dist",
+        "tsConfig": "{projectRoot}/tsconfig.json",
+        "clean": false
+      }
+    },
+    "build": {
+      "cache": true,
+      "executor": "@nx/rollup:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "compiler": "tsc",
+        "outputPath": "{projectRoot}/dist",
+        "main": "{projectRoot}/src/index.ts",
+        "tsConfig": "{projectRoot}/tsconfig.json",
+        "format": ["esm", "cjs"]
+      }
     }
   },
   "defaultBase": "master",

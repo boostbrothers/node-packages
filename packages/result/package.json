@@ -1,16 +1,22 @@
 {
   "name": "@bbros/result",
   "version": "0.0.1",
-  "description": "",
-  "main": "dist/src/index.js",
-  "types": "dist/src/index.d.ts",
   "scripts": {
+    "clean": "rm -rf dist node_modules",
     "compile": "tsc",
     "lint": "eslint ./src/**/*.ts",
     "lint:fix": "eslint ./src/**/*.ts --fix"
   },
-  "keywords": [],
-  "author": "",
+  "main": "./dist/index.cjs.js",
+  "module": "./dist/index.esm.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    "./package.json": "./dist/package.json",
+    ".": {
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.cjs.js"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/boostbrothers/node-packages.git",

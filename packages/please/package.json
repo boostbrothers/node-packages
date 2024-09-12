@@ -2,21 +2,22 @@
   "name": "@bbros/please",
   "version": "0.0.1",
   "description": "",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./index.cjs.js",
+  "module": "./index.esm.js",
+  "types": "./index.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": "./index.esm.js",
+      "require": "./index.cjs.js"
+    }
+  },
   "scripts": {
+    "clean": "rm -rf dist node_modules",
     "compile": "tsc",
     "lint": "eslint ./src/**/*.ts",
-    "lint:fix": "eslint ./src/**/*.ts --fix",
-    "prepublish": "npm run compile",
-    "publish:alpha": "npm version prerelease --preid=alpha && npm publish --tag alpha",
-    "publish:beta": "npm version prerelease --preid=beta && npm publish --tag beta",
-    "publish:patch": "npm version patch && npm publish",
-    "publish:minor": "npm version minor && npm publish",
-    "publish:major": "npm version major && npm publish"
+    "lint:fix": "eslint ./src/**/*.ts --fix"
   },
-  "keywords": [],
-  "author": "",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/boostbrothers/node-packages.git",
@@ -27,7 +28,7 @@
   },
   "license": "ISC",
   "dependencies": {
-    "@boostbrothers/result": "^1.8.0-test.1",
+    "@bbros/result": "*",
     "axios": "^1.7.2",
     "openapi-typescript-helpers": "^0.0.9"
   }

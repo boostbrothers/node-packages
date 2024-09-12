@@ -1,14 +1,9 @@
 {
   "extends": "gts/tsconfig-google.json",
   "compilerOptions": {
+    "rootDir": "./src",
     "outDir": "./dist",
-    "lib": ["es2021"],
-    "noImplicitAny": false,
-    "strictPropertyInitialization": false,
-    "skipLibCheck": true,
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "noUncheckedIndexedAccess": true
+    "lib": ["ES2021"]
   },
-  "include": ["src/**/*.ts", "test/**/*.ts"]
+  "include": ["src/**/*.ts"]
 }
