@@ -1,4 +1,3 @@
-import { Result } from '@boostbrothers/result';
 import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import {
   ClientOptions,
@@ -11,6 +10,7 @@ import {
 } from './extends-types';
 import { HttpMethod, PathsWithMethod } from './openapi-typescript-helpers';
 import { replaceForm } from './utils';
+import { HttpResponse } from './types';
 
 export class HttpClient<
   Paths extends PathObject,
@@ -126,12 +126,12 @@ export class HttpClient<
     return this.default('put', url, input, options);
   }
 
-  private default<Path, Method extends HttpMethod>(
+  private async default<Path, Method extends HttpMethod>(
     method: Method,
     url: Path,
     input: DefaultInputs | undefined,
     options?: DefaultClientOptions
-  ): Result<any, any> {
+  ): Promise<HttpResponse<any, any>> {
     let replacedUrl = url as string;
 
     if (input?.path) {
@@ -146,8 +146,23 @@ export class HttpClient<
       signal: options?.signal,
     });
 
-    return Result.from<AxiosResponse, AxiosError>(req)
-      .map(response => response.data)
-      .mapError(error => error.response?.data);
+    try {
+      const response = await req;
+      return {
+        status: response.status,
+        headers: response.headers,
+        data: response.data || null,
+      };
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        return {
+          status: error.response?.status || 500,
+          headers: error.response?.headers || {},
+          data: error.response?.data || null,
+        };
+      }
+
+      throw error;
+    }
   }
 }
