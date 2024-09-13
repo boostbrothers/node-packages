@@ -28,7 +28,6 @@
   },
   "license": "ISC",
   "dependencies": {
-    "@bbros/result": "*",
     "axios": "^1.7.2",
     "openapi-typescript-helpers": "^0.0.9"
   },
