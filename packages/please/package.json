@@ -1,6 +1,6 @@
 {
   "name": "@bbros/please",
-  "version": "0.0.0",
+  "version": "0.0.1-alpha.0",
   "description": "",
   "main": "./index.cjs.js",
   "module": "./index.esm.js",
@@ -22,9 +22,6 @@
     "type": "git",
     "url": "git+https://github.com/boostbrothers/node-packages.git",
     "directory": "packages/please"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
   },
   "license": "ISC",
   "dependencies": {

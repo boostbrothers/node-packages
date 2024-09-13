@@ -1,6 +1,6 @@
 {
   "name": "@bbros/ifify",
-  "version": "0.0.0",
+  "version": "1.1.1-alpha.0",
   "description": "functional condition functions",
   "author": "yoonhoGo <yoonho.go@bbros.kr>",
   "license": "MIT",
