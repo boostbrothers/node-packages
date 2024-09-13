@@ -1,0 +1,42 @@
+{
+  "name": "@bbros/please",
+  "version": "0.0.0",
+  "description": "",
+  "main": "./index.cjs.js",
+  "module": "./index.esm.js",
+  "types": "./index.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": "./index.esm.js",
+      "require": "./index.cjs.js"
+    }
+  },
+  "scripts": {
+    "clean": "rm -rf dist node_modules",
+    "compile": "tsc",
+    "lint": "eslint ./src/**/*.ts",
+    "lint:fix": "eslint ./src/**/*.ts --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/boostbrothers/node-packages.git",
+    "directory": "packages/please"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.7.2",
+    "openapi-typescript-helpers": "^0.0.9"
+  },
+  "devDependencies": {
+    "eslint-plugin-prettier": "^5.2.1",
+    "gts": "^5.3.1",
+    "typescript": "^5.6.2"
+  },
+  "peerDependencies": {
+    "axios": "^1.7.2"
+  }
+}

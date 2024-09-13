@@ -1,0 +1,6 @@
+{
+  "name": "ifify",
+  "targets": {
+    "build": {}
+  }
+}

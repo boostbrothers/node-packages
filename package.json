@@ -1,15 +1,33 @@
 {
-  "name": "packages",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean": "nx run-many --target=clean --all && rm -rf node_modules",
+    "compile": "nx run-many --target=compile --all",
+    "build": "nx run-many --target=build --all",
+    "lint": "nx run-many --target=lint --all",
+    "lint:fix": "nx run-many --target=lint:fix --all",
+    "graph": "nx graph"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "bbros-bot",
   "devDependencies": {
-    "turbo": "^2.0.14"
-  }
+    "@nx/eslint": "19.6.5",
+    "@nx/eslint-plugin": "19.6.5",
+    "@nx/js": "^19.6.5",
+    "@nx/rollup": "19.7.2",
+    "@types/node": "18.16.9",
+    "@typescript-eslint/eslint-plugin": "^7.16.0",
+    "@typescript-eslint/parser": "^7.16.0",
+    "core-js": "^3.36.1",
+    "eslint": "~8.57.0",
+    "eslint-config-prettier": "^9.0.0",
+    "nx": "19.6.5",
+    "prettier": "^2.6.2",
+    "rollup": "^4.14.0",
+    "tslib": "^2.3.0",
+    "typescript": "~5.5.2"
+  },
+  "dependencies": {}
 }
