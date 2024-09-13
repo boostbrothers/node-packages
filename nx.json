@@ -56,12 +56,6 @@
     "projectsRelationship": "independent",
     "changelog": {
       "projectChangelogs": true
-    },
-    "version": {
-      "conventionalCommits": true
-    },
-    "git": {
-      "commitMessage": "chore(release): {version}"
     }
   }
 }

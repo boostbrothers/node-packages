@@ -1,6 +1,6 @@
 {
   "name": "@bbros/result",
-  "version": "0.0.0",
+  "version": "0.0.1-alpha.0",
   "scripts": {
     "clean": "rm -rf dist node_modules",
     "compile": "tsc",
@@ -21,9 +21,6 @@
     "type": "git",
     "url": "git+https://github.com/boostbrothers/node-packages.git",
     "directory": "packages/result"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
   },
   "license": "ISC",
   "devDependencies": {
