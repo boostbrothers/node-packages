@@ -52,15 +52,13 @@
   ],
   "release": {
     "projects": ["packages/*"],
-    "releaseTagPattern": "release/{version}",
+    "releaseTagPattern": "release/{projectName}/{version}",
     "projectsRelationship": "independent",
+    "changelog": {
+      "projectChangelogs": true
+    },
     "version": {
       "conventionalCommits": true
-    },
-    "changelog": {
-      "workspaceChangelog": {
-        "createRelease": "github"
-      }
     },
     "git": {
       "commitMessage": "chore(release): {version}"
