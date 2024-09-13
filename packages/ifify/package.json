@@ -1,6 +1,6 @@
 {
   "name": "@bbros/ifify",
-  "version": "1.1.0",
+  "version": "0.0.0",
   "description": "functional condition functions",
   "author": "yoonhoGo <yoonho.go@bbros.kr>",
   "license": "MIT",
@@ -22,8 +22,9 @@
   },
   "devDependencies": {
     "@types/node": "^14.18.5",
-    "gts": "^3.1.0",
-    "typescript": "^4.5.4"
+    "eslint-plugin-prettier": "^5.2.1",
+    "gts": "^5.3.1",
+    "typescript": "^5.6.2"
   },
   "repository": {
     "type": "git",

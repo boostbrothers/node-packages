@@ -1,9 +1,12 @@
 {
-  "extends": "gts/tsconfig-google.json",
+  "extends": "../../node_modules/gts/tsconfig-google.json",
   "compilerOptions": {
     "rootDir": "./src",
     "outDir": "./dist",
-    "lib": ["ES2021"]
+    "baseUrl": "./",
+    "lib": ["ES2021"],
+    "module": "ES2022",
+    "moduleResolution": "Bundler"
   },
   "include": ["src/**/*.ts"]
 }

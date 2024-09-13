@@ -1,6 +1,6 @@
 {
   "name": "@bbros/result",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "scripts": {
     "clean": "rm -rf dist node_modules",
     "compile": "tsc",
@@ -25,5 +25,10 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "eslint-plugin-prettier": "^5.2.1",
+    "gts": "^5.3.1",
+    "typescript": "^5.6.2"
+  }
 }
