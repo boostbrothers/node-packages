@@ -239,3 +239,5 @@ export interface DefaultClientOptions {
 export type ResponseHeaders<T> = T extends { headers: any }
   ? T['headers']
   : unknown;
+
+export type HttpResponsees<Path, Method extends HttpMethod> = ResponseObjectMap<FilterKeys<Path, Method>>

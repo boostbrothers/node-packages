@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosInstance } from 'axios';
 import {
   ClientOptions,
   DefaultClientOptions,
@@ -8,7 +8,7 @@ import {
   PathObject,
   SuccessResponseJSONInMethod,
 } from './extends-types';
-import { HttpMethod, PathsWithMethod } from './openapi-typescript-helpers';
+import { HttpMethod, PathsWithMethod } from 'openapi-typescript-helpers';
 import { replaceForm } from './utils';
 import { HttpResponse } from './types';
 
@@ -64,9 +64,8 @@ export class HttpClient<
     url: Path,
     input: ClientOptions<'delete', Path, Paths, PresetHeaders>,
     options?: DefaultClientOptions
-  ): Result<
-    ErrorResponseJSONInMethod<Paths[Path], 'delete'>,
-    SuccessResponseJSONInMethod<Paths[Path], 'delete'>
+  ): Promise<
+    HttpResponse<any, SuccessResponseJSONInMethod<Paths[Path], 'delete'>>
   > {
     return this.default('delete', url, input, options);
   }
@@ -75,9 +74,8 @@ export class HttpClient<
     url: Path,
     input: ClientOptions<'get', Path, Paths, PresetHeaders>,
     options?: DefaultClientOptions
-  ): Result<
-    ErrorResponseJSONInMethod<Paths[Path], 'get'>,
-    SuccessResponseJSONInMethod<Paths[Path], 'get'>
+  ): Promise<
+    HttpResponse<any, SuccessResponseJSONInMethod<Paths[Path], 'get'>>
   > {
     return this.default('get', url, input, options);
   }
@@ -86,9 +84,8 @@ export class HttpClient<
     url: Path,
     input: ClientOptions<'head', Path, Paths, PresetHeaders>,
     options?: DefaultClientOptions
-  ): Result<
-    ErrorResponseJSONInMethod<Paths[Path], 'head'>,
-    SuccessResponseJSONInMethod<Paths[Path], 'head'>
+  ): Promise<
+    HttpResponse<any, SuccessResponseJSONInMethod<Paths[Path], 'head'>>
   > {
     return this.default('head', url, input, options);
   }
@@ -97,9 +94,8 @@ export class HttpClient<
     url: Path,
     input: ClientOptions<'patch', Path, Paths, PresetHeaders>,
     options?: DefaultClientOptions
-  ): Result<
-    ErrorResponseJSONInMethod<Paths[Path], 'patch'>,
-    SuccessResponseJSONInMethod<Paths[Path], 'patch'>
+  ): Promise<
+    HttpResponse<any, SuccessResponseJSONInMethod<Paths[Path], 'patch'>>
   > {
     return this.default('patch', url, input, options);
   }
@@ -108,9 +104,8 @@ export class HttpClient<
     url: Path,
     input: ClientOptions<'post', Path, Paths, PresetHeaders>,
     options?: DefaultClientOptions
-  ): Result<
-    ErrorResponseJSONInMethod<Paths[Path], 'post'>,
-    SuccessResponseJSONInMethod<Paths[Path], 'post'>
+  ): Promise<
+    HttpResponse<any, SuccessResponseJSONInMethod<Paths[Path], 'post'>>
   > {
     return this.default('post', url, input, options);
   }
@@ -119,9 +114,8 @@ export class HttpClient<
     url: Path,
     input: ClientOptions<'put', Path, Paths, PresetHeaders>,
     options?: DefaultClientOptions
-  ): Result<
-    ErrorResponseJSONInMethod<Paths[Path], 'put'>,
-    SuccessResponseJSONInMethod<Paths[Path], 'put'>
+  ): Promise<
+    HttpResponse<any, SuccessResponseJSONInMethod<Paths[Path], 'put'>>
   > {
     return this.default('put', url, input, options);
   }
@@ -148,6 +142,7 @@ export class HttpClient<
 
     try {
       const response = await req;
+
       return {
         status: response.status,
         headers: response.headers,
