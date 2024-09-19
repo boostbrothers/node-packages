@@ -52,8 +52,11 @@
   ],
   "release": {
     "projects": ["packages/*"],
-    "releaseTagPattern": "release/{projectName}/{version}",
+    "releaseTagPattern": "{projectName}/{version}",
     "projectsRelationship": "independent",
+    "version": {
+      "conventionalCommits": true
+    },
     "changelog": {
       "projectChangelogs": true
     }
