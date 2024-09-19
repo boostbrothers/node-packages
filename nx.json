@@ -55,7 +55,8 @@
     "releaseTagPattern": "{projectName}/{version}",
     "projectsRelationship": "independent",
     "version": {
-      "conventionalCommits": true
+      "conventionalCommits": true,
+      "preVersionCommand": "nx run-many -t build"
     },
     "changelog": {
       "projectChangelogs": true
