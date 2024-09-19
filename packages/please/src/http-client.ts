@@ -1,16 +1,23 @@
-import axios, { AxiosError, AxiosInstance } from 'axios';
+import axios, {AxiosError, AxiosInstance} from 'axios';
 import {
   ClientOptions,
   DefaultClientOptions,
   DefaultInputs,
-  ErrorResponseJSONInMethod,
+  GetOperation,
+  GetPathItem,
   HeadersType,
+  HttpResponses,
   PathObject,
-  SuccessResponseJSONInMethod,
+  Simplify,
 } from './extends-types';
-import { HttpMethod, PathsWithMethod } from 'openapi-typescript-helpers';
-import { replaceForm } from './utils';
-import { HttpResponse } from './types';
+import {
+  FilterKeys,
+  HttpMethod,
+  PathsWithMethod,
+  ResponseObjectMap,
+} from 'openapi-typescript-helpers';
+import {replaceForm} from './utils';
+import {HttpResponse} from './types';
 
 export class HttpClient<
   Paths extends PathObject,
@@ -65,7 +72,9 @@ export class HttpClient<
     input: ClientOptions<'delete', Path, Paths, PresetHeaders>,
     options?: DefaultClientOptions
   ): Promise<
-    HttpResponse<any, SuccessResponseJSONInMethod<Paths[Path], 'delete'>>
+    HttpResponses<
+      ResponseObjectMap<GetOperation<GetPathItem<Paths, Path>, 'delete'>>
+    >
   > {
     return this.default('delete', url, input, options);
   }
@@ -75,7 +84,9 @@ export class HttpClient<
     input: ClientOptions<'get', Path, Paths, PresetHeaders>,
     options?: DefaultClientOptions
   ): Promise<
-    HttpResponse<any, SuccessResponseJSONInMethod<Paths[Path], 'get'>>
+    HttpResponses<
+      ResponseObjectMap<GetOperation<GetPathItem<Paths, Path>, 'get'>>
+    >
   > {
     return this.default('get', url, input, options);
   }
@@ -85,7 +96,9 @@ export class HttpClient<
     input: ClientOptions<'head', Path, Paths, PresetHeaders>,
     options?: DefaultClientOptions
   ): Promise<
-    HttpResponse<any, SuccessResponseJSONInMethod<Paths[Path], 'head'>>
+    HttpResponses<
+      ResponseObjectMap<GetOperation<GetPathItem<Paths, Path>, 'head'>>
+    >
   > {
     return this.default('head', url, input, options);
   }
@@ -95,7 +108,9 @@ export class HttpClient<
     input: ClientOptions<'patch', Path, Paths, PresetHeaders>,
     options?: DefaultClientOptions
   ): Promise<
-    HttpResponse<any, SuccessResponseJSONInMethod<Paths[Path], 'patch'>>
+    HttpResponses<
+      ResponseObjectMap<GetOperation<GetPathItem<Paths, Path>, 'patch'>>
+    >
   > {
     return this.default('patch', url, input, options);
   }
@@ -105,7 +120,9 @@ export class HttpClient<
     input: ClientOptions<'post', Path, Paths, PresetHeaders>,
     options?: DefaultClientOptions
   ): Promise<
-    HttpResponse<any, SuccessResponseJSONInMethod<Paths[Path], 'post'>>
+    HttpResponses<
+      ResponseObjectMap<GetOperation<GetPathItem<Paths, Path>, 'post'>>
+    >
   > {
     return this.default('post', url, input, options);
   }
@@ -115,7 +132,9 @@ export class HttpClient<
     input: ClientOptions<'put', Path, Paths, PresetHeaders>,
     options?: DefaultClientOptions
   ): Promise<
-    HttpResponse<any, SuccessResponseJSONInMethod<Paths[Path], 'put'>>
+    HttpResponses<
+      ResponseObjectMap<GetOperation<GetPathItem<Paths, Path>, 'put'>>
+    >
   > {
     return this.default('put', url, input, options);
   }
@@ -125,7 +144,7 @@ export class HttpClient<
     url: Path,
     input: DefaultInputs | undefined,
     options?: DefaultClientOptions
-  ): Promise<HttpResponse<any, any>> {
+  ): Promise<any> {
     let replacedUrl = url as string;
 
     if (input?.path) {
