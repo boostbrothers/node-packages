@@ -1,4 +1,4 @@
-import { URLSearchParams } from 'url';
+import {URLSearchParams} from 'url';
 import {
   ErrorStatus,
   FilterKeys,
@@ -10,12 +10,13 @@ import {
   ResponseObjectMap,
   SuccessResponse,
 } from 'openapi-typescript-helpers';
+import {SpreadObject} from './util-types';
 
 /**
  * Simplify<T>는 T와 동일하지만 모든 속성이 명시적으로 나열된 새로운 타입을 생성합니다.
  * 이는 일부 경우에 타입 추론을 개선하는 데 유용할 수 있습니다.
  */
-export type Simplify<T> = { [KeyType in keyof T]: T[KeyType] } & {};
+export type Simplify<T> = {[KeyType in keyof T]: T[KeyType]} & {};
 
 /**
  * Optional<T, K>는 T를 기반으로 하는 새로운 타입을 생성하며, K로 지정된 속성들은
@@ -29,6 +30,16 @@ export type Optional<T, K extends keyof T> = Omit<T, K> & Partial<T>;
  */
 export type HeadersType = Record<string, string | string[] | undefined>;
 
+export type GetPathItem<
+  Paths extends {},
+  Path extends keyof Paths
+> = Paths[Path];
+
+export type GetOperation<PathItem, Method extends HttpMethod> = FilterKeys<
+  PathItem,
+  Method
+>;
+
 /**
  * ExtractParameters<Method, Path, Paths>는 Paths 객체에서 특정 HTTP 메서드와 경로에 대한
  * 매개변수를 추출합니다. 매개변수가 존재하면 해당 매개변수를 반환하고, 그렇지 않으면 빈 객체를 반환합니다.
@@ -38,7 +49,7 @@ export type ExtractParameters<
   Method extends HttpMethod,
   Path extends keyof Paths,
   Paths extends PathObject
-> = Paths[Path] extends { [K in Method]: { parameters: infer U } } ? U : {};
+> = Paths[Path] extends {[K in Method]: {parameters: infer U}} ? U : {};
 
 /**
  * PathObject<T>는 경로를 해당 PathItemObject에 매핑합니다.
@@ -79,18 +90,12 @@ export type ErrorStatusResponse<T> = {
  */
 export type ErrorResponseAll<T> = {
   [K in keyof T]: K extends ErrorStatus
-    ? JSONLike<ResponseContent<T[K]>> extends { status: number }
-      ? Simplify<JSONLike<ResponseContent<T[K]>> & { status: K }>
+    ? JSONLike<ResponseContent<T[K]>> extends {status: number}
+      ? Simplify<JSONLike<ResponseContent<T[K]>> & {status: K}>
       : never
     : never;
 };
-/**
- * SpreadObject<T>는 객체 타입 T를 "펼치는" 유틸리티 타입입니다.
- * T의 모든 값 타입의 유니온을 추출합니다.
- * 이는 중첩된 객체 타입을 평탄화하거나
- * 객체 속성에서 유니온 타입을 만드는 데 유용합니다.
- */
-export type SpreadObject<T> = T extends { [K in keyof T]: infer U } ? U : never;
+
 /**
  * ErrorResponseJSONInMethod<Path, Method>는 OpenAPI 명세에서 주어진 Path와 HTTP Method 조합에 대한
  * JSON 형식의 오류 응답 타입을 추출하고 처리합니다.
@@ -118,7 +123,7 @@ export type OperationHeader<T, PresetHeaders extends HeadersType> = T extends {
         Optional<T['header'], keyof PresetHeaders> & HeadersType
       >;
     }
-  : { headers?: HeadersType };
+  : {headers?: HeadersType};
 
 /**
  * PathParameters<T, Path>는 URL 경로 문자열에서 경로 매개변수를 추출하는 재귀적 타입입니다.
@@ -137,7 +142,7 @@ export type PathParameters<
         ? string
         : FilterKeys<T, key>;
     } & PathParameters<T, Tail>
-  : { [others: string]: string };
+  : {[others: string]: string};
 
 /**
  * OperationPath<T, Path>는 API 작업의 경로 매개변수 구조를 정의합니다.
@@ -147,9 +152,9 @@ export type PathParameters<
  * 이 타입은 API 요청의 동적 경로 매개변수를 처리하는 데 필수적이며,
  * URL 경로 세그먼트의 타입 안전성과 올바른 사용을 보장합니다.
  */
-export type OperationPath<T, Path> = T extends { path: any }
-  ? { path: Simplify<PathParameters<T['path'], Path>> }
-  : { path?: never };
+export type OperationPath<T, Path> = T extends {path: any}
+  ? {path: Simplify<PathParameters<T['path'], Path>>}
+  : {path?: never};
 
 /**
  * OperationQuery<T>는 API 작업의 쿼리 매개변수 구조를 정의합니다.
@@ -159,10 +164,10 @@ export type OperationPath<T, Path> = T extends { path: any }
  * 선택적 필드로 기본 설정됩니다.
  * 이 타입은 API 요청에서 다양한 형태의 쿼리 매개변수를 처리하는 데 유용합니다.
  */
-export type OperationQuery<T> = T extends { query: any }
-  ? { query: T['query'] }
-  : T extends { query?: any }
-  ? { query?: T['query'] }
+export type OperationQuery<T> = T extends {query: any}
+  ? {query: T['query']}
+  : T extends {query?: any}
+  ? {query?: T['query']}
   : {
       query?:
         | string
@@ -178,9 +183,9 @@ export type OperationQuery<T> = T extends { query: any }
  * 이 타입은 API 작업의 요청 본문을 처리하는 데 필수적이며,
  * 요청 데이터의 타입 안전성과 올바른 사용을 보장합니다.
  */
-export type OperationBody<T> = T extends { requestBody: any }
-  ? { body: RequestBodyJSON<T> }
-  : { body?: string | Buffer };
+export type OperationBody<T> = T extends {requestBody: any}
+  ? {body: RequestBodyJSON<T>}
+  : {body?: string | Buffer};
 
 /**
  * ClientOptions<Method, Path, Paths, PresetHeaders>는 API 클라이언트 요청을 위한
@@ -236,8 +241,15 @@ export interface DefaultClientOptions {
   signal?: AbortSignal;
 }
 
-export type ResponseHeaders<T> = T extends { headers: any }
-  ? T['headers']
-  : unknown;
+export type ResponseHeaders<T> = T extends {headers: any}
+  ? T['headers'] & HeadersType
+  : HeadersType;
 
-export type HttpResponsees<Path, Method extends HttpMethod> = ResponseObjectMap<FilterKeys<Path, Method>>
+export type HttpResponses<Responses extends ResponseObjectMap<any>> =
+  SpreadObject<{
+    [StatusCode in keyof Responses]: {
+      status: StatusCode extends number ? StatusCode : number;
+      headers: JSONLike<ResponseHeaders<Responses[StatusCode]>>;
+      data: JSONLike<ResponseContent<Responses[StatusCode]>> | null;
+    };
+  }>;
