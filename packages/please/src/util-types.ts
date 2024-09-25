@@ -5,3 +5,5 @@
  * 객체 속성에서 유니온 타입을 만드는 데 유용합니다.
  */
 export type SpreadObject<T> = T extends {[K in keyof T]: infer U} ? U : never;
+
+export type ATOB<T, A, B> = T extends A ? B : T;

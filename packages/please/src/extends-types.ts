@@ -10,7 +10,7 @@ import {
   ResponseObjectMap,
   SuccessResponse,
 } from 'openapi-typescript-helpers';
-import {SpreadObject} from './util-types';
+import {ATOB, SpreadObject} from './util-types';
 
 /**
  * Simplify<T>는 T와 동일하지만 모든 속성이 명시적으로 나열된 새로운 타입을 생성합니다.
@@ -250,6 +250,6 @@ export type HttpResponses<Responses extends ResponseObjectMap<any>> =
     [StatusCode in keyof Responses]: {
       status: StatusCode extends number ? StatusCode : number;
       headers: JSONLike<ResponseHeaders<Responses[StatusCode]>>;
-      data: JSONLike<ResponseContent<Responses[StatusCode]>> | null;
+      data: ATOB<JSONLike<ResponseContent<Responses[StatusCode]>>, void, null>;
     };
   }>;

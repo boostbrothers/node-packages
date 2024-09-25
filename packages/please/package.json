@@ -26,7 +26,8 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^1.7.2",
-    "openapi-typescript-helpers": "^0.0.13"
+    "openapi-typescript-helpers": "^0.0.13",
+    "@bbros/result": "file://"
   },
   "devDependencies": {
     "eslint-plugin-prettier": "^5.2.1",
