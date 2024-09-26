@@ -4,6 +4,7 @@ import {
   FilterKeys,
   HttpMethod,
   JSONLike,
+  OKStatusUnion,
   PathItemObject,
   RequestBodyJSON,
   ResponseContent,
@@ -17,6 +18,9 @@ import {ATOB, SpreadObject} from './util-types';
  * 이는 일부 경우에 타입 추론을 개선하는 데 유용할 수 있습니다.
  */
 export type Simplify<T> = {[KeyType in keyof T]: T[KeyType]} & {};
+
+/** Get a union of Error Statuses */
+export type ErrorStatusUnion<T> = FilterKeys<T, ErrorStatus>;
 
 /**
  * Optional<T, K>는 T를 기반으로 하는 새로운 타입을 생성하며, K로 지정된 속성들은
@@ -253,3 +257,33 @@ export type HttpResponses<Responses extends ResponseObjectMap<any>> =
       data: ATOB<JSONLike<ResponseContent<Responses[StatusCode]>>, void, null>;
     };
   }>;
+
+export type HttpSuccessResponses<Responses extends ResponseObjectMap<any>> =
+  SpreadObject<
+    OKStatusUnion<{
+      [StatusCode in keyof Responses]: {
+        status: StatusCode extends number ? StatusCode : number;
+        headers: JSONLike<ResponseHeaders<Responses[StatusCode]>>;
+        data: ATOB<
+          JSONLike<ResponseContent<Responses[StatusCode]>>,
+          void,
+          null
+        >;
+      };
+    }>
+  >;
+
+export type HttpErrorResponses<Responses extends ResponseObjectMap<any>> =
+  SpreadObject<
+    ErrorStatusUnion<{
+      [StatusCode in keyof Responses]: {
+        status: StatusCode extends number ? StatusCode : number;
+        headers: JSONLike<ResponseHeaders<Responses[StatusCode]>>;
+        data: ATOB<
+          JSONLike<ResponseContent<Responses[StatusCode]>>,
+          void,
+          null
+        >;
+      };
+    }>
+  >;

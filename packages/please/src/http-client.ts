@@ -6,18 +6,17 @@ import {
   GetOperation,
   GetPathItem,
   HeadersType,
-  HttpResponses,
+  HttpErrorResponses,
+  HttpSuccessResponses,
   PathObject,
-  Simplify,
 } from './extends-types';
 import {
-  FilterKeys,
   HttpMethod,
   PathsWithMethod,
   ResponseObjectMap,
 } from 'openapi-typescript-helpers';
 import {replaceForm} from './utils';
-import {HttpResponse} from './types';
+import {Result, UnhandledResultError} from '@bbros/result';
 
 export class HttpClient<
   Paths extends PathObject,
@@ -71,8 +70,12 @@ export class HttpClient<
     url: Path,
     input: ClientOptions<'delete', Path, Paths, PresetHeaders>,
     options?: DefaultClientOptions
-  ): Promise<
-    HttpResponses<
+  ): Result<
+    | UnhandledResultError
+    | HttpErrorResponses<
+        ResponseObjectMap<GetOperation<GetPathItem<Paths, Path>, 'delete'>>
+      >,
+    HttpSuccessResponses<
       ResponseObjectMap<GetOperation<GetPathItem<Paths, Path>, 'delete'>>
     >
   > {
@@ -83,8 +86,12 @@ export class HttpClient<
     url: Path,
     input: ClientOptions<'get', Path, Paths, PresetHeaders>,
     options?: DefaultClientOptions
-  ): Promise<
-    HttpResponses<
+  ): Result<
+    | UnhandledResultError
+    | HttpErrorResponses<
+        ResponseObjectMap<GetOperation<GetPathItem<Paths, Path>, 'get'>>
+      >,
+    HttpSuccessResponses<
       ResponseObjectMap<GetOperation<GetPathItem<Paths, Path>, 'get'>>
     >
   > {
@@ -95,8 +102,12 @@ export class HttpClient<
     url: Path,
     input: ClientOptions<'head', Path, Paths, PresetHeaders>,
     options?: DefaultClientOptions
-  ): Promise<
-    HttpResponses<
+  ): Result<
+    | UnhandledResultError
+    | HttpErrorResponses<
+        ResponseObjectMap<GetOperation<GetPathItem<Paths, Path>, 'head'>>
+      >,
+    HttpSuccessResponses<
       ResponseObjectMap<GetOperation<GetPathItem<Paths, Path>, 'head'>>
     >
   > {
@@ -107,8 +118,12 @@ export class HttpClient<
     url: Path,
     input: ClientOptions<'patch', Path, Paths, PresetHeaders>,
     options?: DefaultClientOptions
-  ): Promise<
-    HttpResponses<
+  ): Result<
+    | UnhandledResultError
+    | HttpErrorResponses<
+        ResponseObjectMap<GetOperation<GetPathItem<Paths, Path>, 'patch'>>
+      >,
+    HttpSuccessResponses<
       ResponseObjectMap<GetOperation<GetPathItem<Paths, Path>, 'patch'>>
     >
   > {
@@ -119,8 +134,12 @@ export class HttpClient<
     url: Path,
     input: ClientOptions<'post', Path, Paths, PresetHeaders>,
     options?: DefaultClientOptions
-  ): Promise<
-    HttpResponses<
+  ): Result<
+    | UnhandledResultError
+    | HttpErrorResponses<
+        ResponseObjectMap<GetOperation<GetPathItem<Paths, Path>, 'post'>>
+      >,
+    HttpSuccessResponses<
       ResponseObjectMap<GetOperation<GetPathItem<Paths, Path>, 'post'>>
     >
   > {
@@ -131,20 +150,27 @@ export class HttpClient<
     url: Path,
     input: ClientOptions<'put', Path, Paths, PresetHeaders>,
     options?: DefaultClientOptions
-  ): Promise<
-    HttpResponses<
+  ): Result<
+    | UnhandledResultError
+    | HttpErrorResponses<
+        ResponseObjectMap<GetOperation<GetPathItem<Paths, Path>, 'put'>>
+      >,
+    HttpSuccessResponses<
       ResponseObjectMap<GetOperation<GetPathItem<Paths, Path>, 'put'>>
     >
   > {
     return this.default('put', url, input, options);
   }
 
-  private async default<Path, Method extends HttpMethod>(
+  private default<Path, Method extends HttpMethod>(
     method: Method,
     url: Path,
     input: DefaultInputs | undefined,
     options?: DefaultClientOptions
-  ): Promise<any> {
+  ): Result<
+    UnhandledResultError | HttpErrorResponses<any>,
+    HttpSuccessResponses<any>
+  > {
     let replacedUrl = url as string;
 
     if (input?.path) {
@@ -159,24 +185,22 @@ export class HttpClient<
       signal: options?.signal,
     });
 
-    try {
-      const response = await req;
-
-      return {
+    return Result.from(req)
+      .map(response => ({
         status: response.status,
         headers: response.headers,
         data: response.data || null,
-      };
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        return {
-          status: error.response?.status || 500,
-          headers: error.response?.headers || {},
-          data: error.response?.data || null,
-        };
-      }
+      }))
+      .mapError(err => {
+        if (err instanceof AxiosError) {
+          return {
+            status: err.response?.status || 500,
+            headers: err.response?.headers || {},
+            data: err.response?.data || null,
+          };
+        }
 
-      throw error;
-    }
+        return err;
+      });
   }
 }
