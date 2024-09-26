@@ -32,7 +32,7 @@ export type Optional<T, K extends keyof T> = Omit<T, K> & Partial<T>;
  * HeadersType은 HTTP 헤더의 구조를 나타냅니다.
  * 이는 키가 문자열이고 값이 문자열, 문자열 배열, 또는 undefined일 수 있는 레코드입니다.
  */
-export type HeadersType = Record<string, string | string[] | undefined>;
+export type HeadersType = Record<string, string | string[] | null>;
 
 export type GetPathItem<
   Paths extends {},

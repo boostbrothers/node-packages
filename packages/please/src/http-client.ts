@@ -1,4 +1,4 @@
-import axios, {AxiosError, AxiosInstance} from 'axios';
+import axios, {AxiosError, AxiosHeaders, AxiosInstance} from 'axios';
 import {
   ClientOptions,
   DefaultClientOptions,
@@ -17,6 +17,7 @@ import {
 } from 'openapi-typescript-helpers';
 import {replaceForm} from './utils';
 import {Result, UnhandledResultError} from '@bbros/result';
+import {version} from '../package.json';
 
 export class HttpClient<
   Paths extends PathObject,
@@ -29,11 +30,15 @@ export class HttpClient<
     readonly options?: {
       headers?: PresetHeaders;
       timeout?: number;
+      appName?: string;
     }
   ) {
+    const axiosHeaders = new AxiosHeaders(options?.headers).setUserAgent(
+      `please/${version}; ${options?.appName}`
+    );
     this.instance = axios.create({
       baseURL: baseUrl,
-      headers: options?.headers,
+      headers: axiosHeaders,
       timeout: options?.timeout,
     });
   }
