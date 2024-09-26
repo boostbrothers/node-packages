@@ -259,31 +259,27 @@ export type HttpResponses<Responses extends ResponseObjectMap<any>> =
   }>;
 
 export type HttpSuccessResponses<Responses extends ResponseObjectMap<any>> =
-  SpreadObject<
-    OKStatusUnion<{
-      [StatusCode in keyof Responses]: {
-        status: StatusCode extends number ? StatusCode : number;
-        headers: JSONLike<ResponseHeaders<Responses[StatusCode]>>;
-        data: ATOB<
-          JSONLike<ResponseContent<Responses[StatusCode]>>,
-          void,
-          null
-        >;
-      };
-    }>
-  >;
+  OKStatusUnion<{
+    [StatusCode in keyof Responses]: {
+      status: StatusCode extends number ? StatusCode : number;
+      headers: JSONLike<ResponseHeaders<Responses[StatusCode]>>;
+      data: ATOB<
+        JSONLike<ResponseContent<Responses[StatusCode]>>,
+        void | never,
+        null
+      >;
+    };
+  }>;
 
 export type HttpErrorResponses<Responses extends ResponseObjectMap<any>> =
-  SpreadObject<
-    ErrorStatusUnion<{
-      [StatusCode in keyof Responses]: {
-        status: StatusCode extends number ? StatusCode : number;
-        headers: JSONLike<ResponseHeaders<Responses[StatusCode]>>;
-        data: ATOB<
-          JSONLike<ResponseContent<Responses[StatusCode]>>,
-          void,
-          null
-        >;
-      };
-    }>
-  >;
+  ErrorStatusUnion<{
+    [StatusCode in keyof Responses]: {
+      status: StatusCode extends number ? StatusCode : number;
+      headers: JSONLike<ResponseHeaders<Responses[StatusCode]>>;
+      data: ATOB<
+        JSONLike<ResponseContent<Responses[StatusCode]>>,
+        void | never,
+        null
+      >;
+    };
+  }>;
